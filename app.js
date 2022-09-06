@@ -11,7 +11,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 // connect  to mongodb
 //     */2 * * * *'
-cron.schedule('*/20 * * * * *', ()=>{
+cron.schedule('*/10 * * * * *', ()=>{
     console.log('___________________ CRON-NODE  ____________________')
     let url_Issy = 'https://data.issy.com/api/records/1.0/search/?dataset=park-indigo-disponibilite-temps-reel&q=&sort=value_free_spots&facet=value_status&facet=ville&facet=name&timezone=Europe/Paris'
     getFetchData(url_Issy).then(res =>{
@@ -30,13 +30,13 @@ cron.schedule('*/20 * * * * *', ()=>{
     getFetchData(url_Nantes).then(res =>{
     saveData(res,'donneesNantes')
     })
-    let url_Orleans ='https://data.orleans-metropole.fr/api/v2/catalog/datasets/mobilite-places-disponibles-parkings-en-temps-reel/records?offset=0&lang=fr&timezone=Europe%2FParis'
-    getFetchData(url_Orleans).then(res =>{
-        saveData(res,'donneesOrleans')
-        })
+    // let url_Orleans ='https://data.orleans-metropole.fr/api/v2/catalog/datasets/mobilite-places-disponibles-parkings-en-temps-reel/records?offset=0&lang=fr&timezone=Europe%2FParis'
+    // getFetchData(url_Orleans).then(res =>{
+    //     saveData(res,'donneesOrleans')
+    //     })
 })
 
-// app.use(express.static('../FrontEnd/'));
+app.use(express.static('./frontEnd'));
 export default app
 
 

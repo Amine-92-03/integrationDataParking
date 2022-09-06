@@ -6,6 +6,9 @@ var Server = mongoDb.Server
 let uri = 'mongodb://localhost:27017/'
 var dbName = 'DonnéesParkingsTempsReel'
 
+
+
+
 const client = new MongoClient(uri);
 (async () => await client.connect())();
 
@@ -15,7 +18,7 @@ const saveData = async (data, collectionName) => {
     // console.log(data);
     let listLastParkings =[]
     const collection = client.db(dbName).collection(collectionName);
-    const getNumberDoc = await collection.find({}).count()
+    const getNumberDoc = await collection.countDocuments()
     const getLastInsertedDoc = await collection.find({}).sort({_id:-1}).limit(1)
     if(getNumberDoc === 0){
       const result = await collection.insertMany(data)
@@ -28,9 +31,10 @@ const saveData = async (data, collectionName) => {
       const result = await collection.insertMany(data)
       console.log('collection : ',collectionName ); 
       console.log('Réponse db : ', result.acknowledged) 
-      console.log('Nombre de colonnes : ', result.insertedCount) 
+      console.log('Nombre de colonnes : ', result.insertedCount, '/ total : ', getNumberDoc) 
+      console.log('___________________________________________________');
     }
-    })  
+    }) 
   } catch (err) {
     console.error(err);
     sendmail({subject : 'error in Controllers => saveData(), line 26',
@@ -46,6 +50,7 @@ const cleanup = (event) => { // SIGINT is sent for example when you Ctrl+C a run
 
 process.on('SIGINT', cleanup);
 process.on('SIGTERM', cleanup);
+
 
 export  default saveData
 
