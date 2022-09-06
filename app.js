@@ -5,15 +5,14 @@ import getFetchData from './Controllers/getFetchData.js'
 import saveData from './Controllers/saveDataToDb.js'
 import sendmail from './Controllers/sendMail.js'
 
-// sendmail('hello')
 
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 // connect  to mongodb
-
-cron.schedule('*/2 * * * *', ()=>{
-    console.log('___________________ CRON-NODE 1 ____________________')
+//     */2 * * * *'
+cron.schedule('*/5 * * * * *', ()=>{
+    console.log('___________________ CRON-NODE  ____________________')
     let url_Issy = 'https://data.issy.com/api/records/1.0/search/?dataset=park-indigo-disponibilite-temps-reel&q=&sort=value_free_spots&facet=value_status&facet=ville&facet=name'
     getFetchData(url_Issy).then(res =>{
         saveData(res,'donneesIssy')
@@ -23,7 +22,6 @@ cron.schedule('*/2 * * * *', ()=>{
         saveData(res,'donneesGrandPoitiers')
     })
 })
-
 
 // app.use(express.static('../FrontEnd/'));
 export default app

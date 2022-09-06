@@ -13,11 +13,11 @@ function sendMail(message){
       console.log(transporter);
       
       var mailOptions = {
-        from: 'mefti.amine92@gmail.com',
-        to: 'mefti.amine92@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: message,
-        html: `<h1>Bonjour Amine! Rapport de l'application :</h1><p>${message}</p>`
+        from: 'bigdatamspr@gmail.com',
+        to: 'bigdatamspr@gmail.com',
+        subject: message.subject,
+        // text: message,
+        html: `<h1>Bonjour Amine! Rapport de l'application :</h1><h4>${message.text}</h4>`
       };
       let sendmail = transporter.sendMail(mailOptions, function(error, info){
         if (error) {
@@ -28,6 +28,5 @@ function sendMail(message){
       });
       
 }
-
 
 export default sendMail

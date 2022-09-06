@@ -1,13 +1,10 @@
 import mongoDb from 'mongodb'
-
-
+import sendmail from './sendMail.js'
 var MongoClient = mongoDb.MongoClient;
 var Server = mongoDb.Server
 // console.log(Server);
 let uri = 'mongodb://localhost:27017/'
 var dbName = 'DonnéesParkingsTempsReel'
-
-// async function saveData(data, collectionName){
 
 const client = new MongoClient(uri);
 (async () => await client.connect())();
@@ -16,13 +13,29 @@ const client = new MongoClient(uri);
 const saveData = async (data, collectionName) => {
   try {
     // console.log(data);
+    let listLastParkings =[]
     const collection = client.db(dbName).collection(collectionName);
-    const result = await collection.insertMany(data)
-    console.log('collection : ',collectionName ); 
-    console.log('Réponse db : ', result.acknowledged) 
-    console.log('Nombre de colonnes : ', result.insertedCount) 
+    const getNumberDoc = await collection.find({}).count()
+    const getLastInsertedDoc = await collection.find({}).sort({_id:-1}).limit(1)
+    if(getNumberDoc === 0){
+      const result = await collection.insertMany(data)
+      console.log('collection : ',collectionName ); 
+      console.log('Réponse db : ', result.acknowledged) 
+      console.log('Nombre de colonnes : ', result.insertedCount) 
+    }
+    getLastInsertedDoc.forEach(async (elm) => {
+    if(elm.recordid != data[data.length-1].recordid ){
+      const result = await collection.insertMany(data)
+      console.log('collection : ',collectionName ); 
+      console.log('Réponse db : ', result.acknowledged) 
+      console.log('Nombre de colonnes : ', result.insertedCount) 
+    }
+    })  
   } catch (err) {
     console.error(err);
+    sendmail({subject : 'error in Controllers => saveData(), line 26',
+    text : err
+  })
   }
 }
 
@@ -30,10 +43,9 @@ const cleanup = (event) => { // SIGINT is sent for example when you Ctrl+C a run
     client.close(); // Close MongodDB Connection when Process ends
     process.exit(); // Exit with default success-code '0'.
   }
-  
+
 process.on('SIGINT', cleanup);
 process.on('SIGTERM', cleanup);
-
 
 export  default saveData
 

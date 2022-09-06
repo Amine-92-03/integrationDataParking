@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import sendmail from './sendMail.js'
 
 async function getFetchData(url){
     try {
@@ -14,6 +15,9 @@ async function getFetchData(url){
     } catch (error) {
         console.log('error in Controllers => getFetchData'); 
         console.log(error);
+        sendmail({subject : 'error in Controllers => getFetchData, LINE 18 :',
+                  text : error
+                })
     }
    
 }
