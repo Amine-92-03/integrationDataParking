@@ -19,7 +19,6 @@ async function getFetchData(url){
                   text : error
                 })
     }
-   
 }
 
 export default getFetchData
