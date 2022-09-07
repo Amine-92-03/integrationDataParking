@@ -12,7 +12,7 @@ var dbName = 'DonnéesParkingsTempsReel'
 let url_cosmosDb =  process.env.COSMOS_CONNECTION_STRING;
 
 
-const client = new MongoClient(url_cosmosDb);
+const client = new MongoClient(uri);
 (async () => await client.connect())();
 
 // use client to work with db
