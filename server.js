@@ -4,6 +4,7 @@ import app from './app.js'
 
 const server = http.createServer(app)
 
+console.log('hello');
 
 app.set('port', process.env.PORT || process.env.PORT)
 server.listen(process.env.PORT || process.env.PORT, (err)=>{

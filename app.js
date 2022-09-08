@@ -15,6 +15,7 @@ cron.schedule('*/10 * * * * *', ()=>{
     console.log('___________________ CRON-NODE  ____________________')
     let url_Issy = 'https://data.issy.com/api/records/1.0/search/?dataset=park-indigo-disponibilite-temps-reel&q=&sort=value_free_spots&facet=value_status&facet=ville&facet=name&timezone=Europe/Paris'
     getFetchData(url_Issy).then(res =>{
+        
         saveData(res,'donneesIssy')
     })
     let url_strasbourg ='https://data.strasbourg.eu/api/records/1.0/search/?dataset=occupation-parkings-temps-reel&q=&facet=etat_descriptif&timezone=Europe/Paris'
@@ -34,7 +35,9 @@ cron.schedule('*/10 * * * * *', ()=>{
     // getFetchData(url_Orleans).then(res =>{
     //     saveData(res,'donneesOrleans')
     //     })
+
 })
+
 
 app.use(express.static('./frontEnd'));
 export default app

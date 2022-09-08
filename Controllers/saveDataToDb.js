@@ -7,10 +7,10 @@ dotenv.config()
 var Server = mongoDb.Server
 // console.log(Server);
 let uri = 'mongodb://localhost:27017/'
+let uri_mongoVM = 'mongodb://20.199.21.135:27017/'
 var dbName = 'DonnéesParkingsTempsReel'
 
 let url_cosmosDb =  process.env.COSMOS_CONNECTION_STRING;
-
 
 const client = new MongoClient(uri);
 (async () => await client.connect())();

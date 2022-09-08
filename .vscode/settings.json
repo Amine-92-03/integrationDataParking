@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/1374d62d-1bf8-400f-86ff-ead17bb1727c/microsoft.web/sites/subscriptions/1374d62d-1bf8-400f-86ff-ead17bb1727c/resourceGroups/ApplicationAzureMongoDb/providers/Microsoft.Web/sites/ApplicationAzureMongoDb",
+    "appService.deploySubpath": "."
+}
