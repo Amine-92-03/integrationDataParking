@@ -8,12 +8,13 @@ var Server = mongoDb.Server
 // console.log(Server);
 let uri = 'mongodb://localhost:27017/'
 let uri_mongoVM = 'mongodb://20.199.21.135:27017/'
+let uri_mongoAtlasDb = 'mongodb+srv://amineUbuntu:Aminou_51992@cluster0.dkiyacg.mongodb.net/?retryWrites=true&w=majority'
 var dbName = 'DonnéesParkingsTempsReel'
 
 let url_cosmosDb =  process.env.COSMOS_CONNECTION_STRING;
 
-const client = new MongoClient(uri);
-(async () => await client.connect())();
+const client = new MongoClient(uri_mongoAtlasDb);
+(async () => await client.connect())()
 
 // use client to work with db
 const saveData = async (data, collectionName) => {
@@ -40,9 +41,10 @@ const saveData = async (data, collectionName) => {
     }) 
   } catch (err) {
     console.error(err);
-    sendmail({subject : 'error in Controllers => saveData(), line 26',
-    text : err
-  })
+//    sendmail({subject : 'error in Controllers => saveData(), line 26',
+  
+//  text : err
+//  })
   }
 }
 
